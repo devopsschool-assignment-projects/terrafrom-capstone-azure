@@ -142,7 +142,10 @@ resource "terraform_data" "images" {
   triggers_replace = [local.image_tag, module.acr.name]
 
   provisioner "local-exec" {
-    command = "${path.module}/../scripts/build-images.sh ${module.acr.name} ${local.image_tag} ${local.g.postgres_image}"
+    # Run through bash explicitly: on Windows Terraform would otherwise use cmd.exe, which cannot run .sh files
+    # (use Git Bash or WSL2 on Windows).
+    interpreter = ["bash", "-c"]
+    command     = "${path.module}/../scripts/build-images.sh ${module.acr.name} ${local.image_tag} ${local.g.postgres_image}"
   }
 }
 

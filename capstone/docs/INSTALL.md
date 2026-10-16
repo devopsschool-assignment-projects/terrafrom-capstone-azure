@@ -20,7 +20,10 @@ brew install --cask docker     # or Rancher Desktop
 
 ## Windows
 
-Use **WSL2 (Ubuntu)** and follow the Linux steps inside it. The scripts are bash.
+Best: **WSL2 (Ubuntu)** - follow the Linux steps inside it. The scripts are bash.
+Git Bash also works (install Azure CLI, Terraform, jq, kubectl and `dig`/`nslookup` for Windows), but run every command
+from the Git Bash window, and `git pull` first: older copies fail with `'.' is not recognized` (Terraform tried to run a
+`.sh` script through `cmd.exe`).
 
 ## Linux (Ubuntu / Debian)
 

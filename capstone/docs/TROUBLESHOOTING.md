@@ -6,6 +6,8 @@
 | `login.sh sp`: `AZURE_CLIENT_ID is not set` | `config/secrets.env` missing or empty | Put the `secrets.env` file from the instructor in `config/` (template: `config/secrets.env.example`) |
 | `login.sh sp`: `No subscriptions found` | Service principal roles not active yet | Wait 5 minutes and run again |
 | `AADSTS7000215 invalid client secret` | Wrong or expired secret | Ask the instructor for a new secret |
+| Windows: `local-exec ... '.' is not recognized as an internal or external command` | Old copy of the code: Terraform ran the `.sh` script through `cmd.exe` | `git pull` (fixed: it now runs through `bash`), use Git Bash or WSL2, rerun deploy |
+| Windows: `$'\r': command not found` or `bad interpreter` | Git converted the scripts to Windows (CRLF) line endings | `git pull` (a `.gitattributes` now forces Unix endings), then `git rm --cached -r . && git reset --hard` or re-clone |
 | `preflight` says not enough vCPU quota | Another student has the quota, or wrong VM size | Ask the instructor; use `Standard_D2s_v6` only |
 | `Error: ... AuthorizationFailed ... roleAssignments/write` | The login cannot create role assignments | Instructor: grant *Role Based Access Control Administrator* (docs/INSTRUCTOR.md) |
 | `student_id ... is not listed in config/master-values.yaml` | Typo in the id | Use the exact id from the instructor |
