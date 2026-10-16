@@ -4,17 +4,19 @@
 
 1. **Quotas** (region `westus3`, already requested for this subscription - verify with `preflight.sh`):
 
-   | Quota | Needed for 12 students | Notes |
+   | Quota | Needed for 12 students + you | Notes |
    |---|---|---|
-   | `StandardDsv6Family` vCPUs | 24 (12 x 2) | Students MUST use `Standard_D2s_v6`; other families have 0 |
-   | Total Regional vCPUs | 24 + headroom | 190 |
-   | `IPv4StandardSkuPublicIpAddresses` | 24 (12 x 2: gateway + cluster outbound) | raised 20 -> 40 |
+   | `StandardDsv6Family` vCPUs | 26 (13 x 2, includes the `instructor` demo row) | Students MUST use `Standard_D2s_v6`; other families have 0 |
+   | Total Regional vCPUs | 26 + headroom | 190 |
+   | `IPv4StandardSkuPublicIpAddresses` | 26 (13 x 2: gateway + cluster outbound) | raised 20 -> 40 |
 
 2. **State storage:** `cd bootstrap && terraform init && terraform apply`.
-   This writes `config/backend.hcl`. Share the whole `capstone/` folder, including that file.
+   This writes `config/backend.hcl` (not a secret, committed to git). Students get the code from GitHub (`git clone`);
+   the ONE secrets file `config/secrets.env` is NOT in git - send it to them privately.
+   Your day-by-day run sheet is in `instructorflow.md`.
 
 3. **Edit `config/master-values.yaml`** if needed (region, VM size, domain, students).
-   `index` must be unique per student.
+   `index` must be unique per student. The `instructor` row (index 13) is for your live demo.
 
 4. **Student access.** Students can sign in two ways (both documented in `docs/INSTALL.md`; `scripts/login.sh` does both):
    - **Way 1, interactive:** the shared `lab` account. MFA is enforced on it, so the CLI cannot use a

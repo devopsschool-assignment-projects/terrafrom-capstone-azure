@@ -60,6 +60,6 @@ terraform version
 `config/backend.hcl` exists, and there is enough **vCPU** and **public IP** quota.
 
 ## Files the instructor gives you
-- This repository (including `config/master-values.yaml` and `config/backend.hcl`)
+- The repository: `git clone git@cotocusin:devopsschool-assignment-projects/terrafrom-capstone-azure.git` (then `cd terrafrom-capstone-azure/capstone`)
 - Your student id (for example `student03`)
 - `config/secrets.env` (ONE private file with every secret: sign-in details and the Cloudflare token). It is not in GitHub; the instructor sends it privately. Put it in `config/`.

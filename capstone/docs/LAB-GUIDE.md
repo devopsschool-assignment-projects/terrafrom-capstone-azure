@@ -33,8 +33,7 @@ Questions to answer:
 Terraform builds ~43 resources. While you wait, read `docs/ARCHITECTURE.md`.
 
 **DNS note:** the last module publishes your subdomain by adding 4 `NS` records in
-Cloudflare. That needs a Cloudflare token. If your instructor gave you one:
-it is already in `config/secrets.env` (`CLOUDFLARE_API_TOKEN`), so you do nothing. It is also used by destroy, because destroy removes the records. If there is no token, the instructor has set `enable_cloudflare_delegation: false` and you will use the
+Cloudflare. That needs a Cloudflare token. It is already inside the `config/secrets.env` file the instructor gave you, so you do nothing. It is also used by destroy, because destroy removes the records. If there is no token, the instructor has set `enable_cloudflare_delegation: false` and you will use the
 gateway IP instead (see step 4).
 
 ## Step 3 - Validate

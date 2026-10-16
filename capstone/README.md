@@ -63,3 +63,4 @@ AVM module later (see `docs/INSTRUCTOR.md`).
 3. `docs/ARCHITECTURE.md` - how it fits together
 4. `docs/INSTRUCTOR.md` - setup, quotas, cost, cleanup
 5. `docs/TROUBLESHOOTING.md` - when something goes wrong
+6. `instructorflow.md` - instructor run sheet for the live session
