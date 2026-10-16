@@ -87,3 +87,8 @@ Append new entries at the bottom. Format: date - what - result.
 - .gitignore now covers secrets.env, *.pem, *.key, .terraform, .tf-data, *.tfstate*, *.tfplan, .DS_Store. Untracked bootstrap/terraform.tfstate (kept on disk; needed to destroy bootstrap later).
 - Amended the single local commit (now 1fc4f75), expired reflog and gc'd old objects; verified no secrets in history. Pushed to origin main (new branch).
 - TODO for user: put the Cloudflare token into config/secrets.env (CLOUDFLARE_API_TOKEN=). Consider rotating SP secret and storage account keys since they briefly sat in a local commit (never reached GitHub).
+
+## 2026-10-16 (demo prep)
+- Added spare `instructor` row (index 13) to capstone/config/master-values.yaml for the live demo.
+- Wrote capstone/instructorflow.md (step-by-step instructor flow: blockers, day-before, session timeline, plan B, after-course cleanup, tested vs not tested). Not yet committed/pushed.
+- preflight for `instructor`: all OK except CLOUDFLARE_API_TOKEN still empty in config/secrets.env (user must add).

@@ -54,3 +54,5 @@ students:
   student10: { index: 10, banner: "Hello from student10 - Key Vault says hi" }
   student11: { index: 11, banner: "Hello from student11 - Key Vault says hi" }
   student12: { index: 12, banner: "Hello from student12 - Key Vault says hi" }
+  # Spare row for the instructor live demo:
+  instructor: { index: 13, banner: "Hello from the instructor - Key Vault says hi" }
