@@ -80,3 +80,10 @@ Append new entries at the bottom. Format: date - what - result.
 - Deleted scratch copy (held token + SP secret). Real folder has no Cloudflare token; config/azure-login.env holds the SP secret (chmod 600).
 - NOT tested: Way 1 (interactive lab-user login with MFA); students on other OS (Windows/WSL, Linux); more than 2 students at once; HTTPS; deck visual rendering.
 - After course: az ad sp delete --id 680513f1-3528-44b7-bf58-e6b278b6eb08 ; remove RBAC Administrator from lab user; roll Cloudflare token; terraform destroy in capstone/bootstrap.
+
+## 2026-10-16 (GitHub push)
+- GitHub push protection blocked the first push (SP secret in config/azure-login.env, storage keys in bootstrap/terraform.tfstate). Commit was local only.
+- Consolidated ALL secrets into ONE git-ignored file: capstone/config/secrets.env (SP login + CLOUDFLARE_API_TOKEN slot, currently empty). Template: config/secrets.env.example (committed). Removed azure-login.env. New scripts/_env.sh loads the token for Terraform; provider no longer reads the token from master-values.yaml.
+- .gitignore now covers secrets.env, *.pem, *.key, .terraform, .tf-data, *.tfstate*, *.tfplan, .DS_Store. Untracked bootstrap/terraform.tfstate (kept on disk; needed to destroy bootstrap later).
+- Amended the single local commit (now 1fc4f75), expired reflog and gc'd old objects; verified no secrets in history. Pushed to origin main (new branch).
+- TODO for user: put the Cloudflare token into config/secrets.env (CLOUDFLARE_API_TOKEN=). Consider rotating SP secret and storage account keys since they briefly sat in a local commit (never reached GitHub).
