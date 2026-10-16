@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Capstone Guest Book</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; color: #1b1f24; }
+    h1 { margin-bottom: .25rem; }
+    .card { border: 1px solid #d0d7de; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+    .banner { background: #ddf4ff; border-color: #54aeff; font-weight: 600; }
+    .ok { color: #1a7f37; } .bad { color: #cf222e; }
+    dl { display: grid; grid-template-columns: 11rem 1fr; gap: .25rem 1rem; margin: 0; }
+    dt { color: #57606a; }
+    input, button { font: inherit; padding: .5rem; margin: .25rem 0; }
+    input { width: 100%; box-sizing: border-box; }
+    button { background: #0969da; color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
+    li { margin: .35rem 0; }
+    small { color: #57606a; }
+  </style>
+</head>
+<body>
+  <h1>Capstone Guest Book</h1>
+  <small>frontend &rarr; backend &rarr; PostgreSQL, all running in your AKS cluster</small>
+
+  <div class="card banner" id="banner">Loading banner from Key Vault&hellip;</div>
+
+  <div class="card">
+    <dl id="info"><dt>Status</dt><dd>loading&hellip;</dd></dl>
+  </div>
+
+  <div class="card">
+    <h3>Sign the guest book</h3>
+    <form id="form">
+      <input id="author" placeholder="Your name" maxlength="50" required>
+      <input id="text" placeholder="Your message" maxlength="300" required>
+      <button type="submit">Save to database</button>
+    </form>
+    <ul id="messages"></ul>
+  </div>
+
+<script>
+async function loadInfo() {
+  try {
+    const r = await fetch('/api/info'); const d = await r.json();
+    document.getElementById('banner').textContent = d.banner;
+    const kv = d.banner_source === 'key-vault';
+    document.getElementById('info').innerHTML = `
+      <dt>Student</dt><dd>${d.student}</dd>
+      <dt>Backend pod</dt><dd>${d.pod}</dd>
+      <dt>Database</dt><dd class="${d.database === 'up' ? 'ok' : 'bad'}">${d.database} ${d.database_version ? '(' + d.database_version + ')' : ''}</dd>
+      <dt>Banner source</dt><dd class="${kv ? 'ok' : 'bad'}">${d.banner_source}${d.banner_error ? ' - ' + d.banner_error : ''}</dd>`;
+  } catch (e) {
+    document.getElementById('info').innerHTML = '<dt>Status</dt><dd class="bad">backend not reachable</dd>';
+  }
+}
+async function loadMessages() {
+  try {
+    const r = await fetch('/api/messages'); const rows = await r.json();
+    const ul = document.getElementById('messages'); ul.innerHTML = '';
+    rows.forEach(m => { const li = document.createElement('li'); li.textContent = `${m.author}: ${m.text}`; ul.appendChild(li); });
+  } catch (e) { /* shown by loadInfo */ }
+}
+document.getElementById('form').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  await fetch('/api/messages', { method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ author: author.value, text: text.value }) });
+  text.value = ''; loadMessages();
+});
+loadInfo(); loadMessages();
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+terraform
+
+# ---- secrets: NEVER commit ----
+capstone/config/secrets.env
+*.pem
+*.key
+
+# ---- terraform local files ----
+.terraform/
+.tf-data/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# ---- misc ----
+.DS_Store

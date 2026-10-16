@@ -1,0 +1,56 @@
+# ============================================================================
+#  MASTER VALUES  -  the ONE file the instructor edits.
+#
+#  Every student runs the SAME code:   ./scripts/deploy.sh student03
+#  The code looks up "student03" below and builds that student's environment.
+#  Nothing else needs to be edited.
+# ============================================================================
+
+global:
+  prefix: cap                       # short name used in every resource name
+  location: westus3                 # Azure region (quota was raised here)
+  # subscription_id: ""             # optional; default = the subscription you are logged in to
+
+  # --- sizing: 1 worker node per student -----------------------------------
+  node_vm_size: Standard_D2s_v6     # 2 vCPU / 8 GB. Quota is raised for the Dsv6 family only!
+  node_count: 1
+  kubernetes_version: null          # null = AKS default
+
+  # --- DNS -------------------------------------------------------------------
+  # Each student gets  <student>.<base_domain>  e.g. student03.lab.collabgigs.com
+  # and the app is served at  app.<student>.<base_domain>
+  base_domain: lab.collabgigs.com
+  enable_cloudflare_delegation: true          # false = create the Azure zone only
+  cloudflare_zone_id: 907a8a93f3fad1dea81000805448240d   # zone of collabgigs.com (not a secret)
+  # The Cloudflare API token is a secret: it lives in config/secrets.env (not committed to git).
+
+  # --- Application Gateway ---------------------------------------------------
+  appgw_capacity: 1                 # fixed instance count for the lab (cost control)
+  waf_mode: Prevention              # Prevention | Detection
+
+  # --- app images ------------------------------------------------------------
+  postgres_image: postgres:16-alpine
+
+  tags:
+    project: capstone
+    owner: rajesh@drivemode.com
+    purpose: training
+
+# ----------------------------------------------------------------------------
+#  Students. "index" must be UNIQUE (1-250): it picks the private IP range
+#  10.<index>.0.0/16. "banner" is stored in the student's Key Vault and shown
+#  on the web page (proves the pod can read the vault with Entra ID).
+# ----------------------------------------------------------------------------
+students:
+  student01: { index: 1,  banner: "Hello from student01 - Key Vault says hi" }
+  student02: { index: 2,  banner: "Hello from student02 - Key Vault says hi" }
+  student03: { index: 3,  banner: "Hello from student03 - Key Vault says hi" }
+  student04: { index: 4,  banner: "Hello from student04 - Key Vault says hi" }
+  student05: { index: 5,  banner: "Hello from student05 - Key Vault says hi" }
+  student06: { index: 6,  banner: "Hello from student06 - Key Vault says hi" }
+  student07: { index: 7,  banner: "Hello from student07 - Key Vault says hi" }
+  student08: { index: 8,  banner: "Hello from student08 - Key Vault says hi" }
+  student09: { index: 9,  banner: "Hello from student09 - Key Vault says hi" }
+  student10: { index: 10, banner: "Hello from student10 - Key Vault says hi" }
+  student11: { index: 11, banner: "Hello from student11 - Key Vault says hi" }
+  student12: { index: 12, banner: "Hello from student12 - Key Vault says hi" }
